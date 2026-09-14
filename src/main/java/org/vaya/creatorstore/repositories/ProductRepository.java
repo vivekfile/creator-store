@@ -1,4 +1,7 @@
 package org.vaya.creatorstore.repositories;
 
-public interface ProductRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.vaya.creatorstore.entities.Product;
+
+public interface ProductRepository extends JpaRepository<Product, Long> {
 }
