@@ -21,7 +21,6 @@ public class OrderRequest {
     private String customerEmail;
 
     @Valid
-
     @NotEmpty(message = "Order must contain atleas one item")
     
     private List<OrderItemRequest> items;
