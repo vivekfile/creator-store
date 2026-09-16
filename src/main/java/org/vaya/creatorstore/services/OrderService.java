@@ -19,16 +19,16 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class OrderService {
-    private OrderRepository orderRepository;
-    private ProductRepository productRepository;
+    private final OrderRepository orderRepository;
+    private final ProductRepository productRepository;
 
     @Transactional
     public Order createOrder(OrderRequest orderRequest){
         List<OrderItem> orderItems = new ArrayList<>();
     BigDecimal totalPrice = BigDecimal.ZERO;
         Order order = new Order();
-        order.setCustomerName(order.getCustomerName());
-        order.setCustomerEmail(order.getCustomerEmail());
+        order.setCustomerName(orderRequest.getCustomerName());
+        order.setCustomerEmail(orderRequest.getCustomerEmail());
         order.setStatus("Confirmed");
 
         for (OrderItemRequest itemRequest : orderRequest.getItems()){
@@ -68,6 +68,6 @@ public class OrderService {
         order.setTotalPrice(totalPrice);
         order.setOrderItems(orderItems);
 
-        return order;
+        return orderRepository.save(order);
     }
 }
