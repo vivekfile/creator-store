@@ -23,22 +23,22 @@ public class OrderService {
     private final ProductRepository productRepository;
 
     @Transactional
-    public Order createOrder(OrderRequest orderRequest){
+    public Order createOrder(OrderRequest orderRequest) {
         List<OrderItem> orderItems = new ArrayList<>();
-    BigDecimal totalPrice = BigDecimal.ZERO;
+        BigDecimal totalPrice = BigDecimal.ZERO;
         Order order = new Order();
         order.setCustomerName(orderRequest.getCustomerName());
         order.setCustomerEmail(orderRequest.getCustomerEmail());
         order.setStatus("Confirmed");
 
-        for (OrderItemRequest itemRequest : orderRequest.getItems()){
+        for (OrderItemRequest itemRequest : orderRequest.getItems()) {
             Product product = productRepository.findById(itemRequest.getProductId())
                     .orElseThrow(() -> new RuntimeException("Product not found " + itemRequest.getProductId()
                     ));
 
             //Check the product stock
-            if(product.getStockQuantity() < itemRequest.getQuantity()){
-                throw new RuntimeException("Not enough stock for "+ itemRequest.getProductId());
+            if (product.getStockQuantity() < itemRequest.getQuantity()) {
+                throw new RuntimeException("Not enough stock for " + itemRequest.getProductId());
             }
 
             //calculate the total price
